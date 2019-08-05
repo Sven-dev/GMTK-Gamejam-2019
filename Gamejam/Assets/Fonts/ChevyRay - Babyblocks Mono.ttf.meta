@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 54762f4b624d46a4db6b6814df232807
+timeCreated: 1564928916
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ChevyRay - Babyblocks Mono
+  fontNames:
+  - ChevyRay - Babyblocks Mono
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
