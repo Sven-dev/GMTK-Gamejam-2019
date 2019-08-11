@@ -511,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 114980921369791206, guid: af82382443e43e246ab754dbe5884da6,
     type: 2}
-  Force: 5000
+  Force: 1000
 --- !u!212 &212826727196404538
 SpriteRenderer:
   m_ObjectHideFlags: 1

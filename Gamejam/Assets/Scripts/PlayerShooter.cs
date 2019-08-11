@@ -11,7 +11,6 @@ public class PlayerShooter : Shooter
     public bool Coolingdown;
     public Bar CooldownBar;
 
-    private Rigidbody2D Rigidbody;
     private CameraShake Cam;
 
 	// Use this for initialization
@@ -19,16 +18,13 @@ public class PlayerShooter : Shooter
     {
         base.Start();
         Coolingdown = false;
-   
-        Rigidbody = transform.parent.GetComponent<Rigidbody2D>();
+        
         Cam = Camera.main.GetComponent<CameraShake>();
 	}
 
     public override void Shoot()
     {
         base.Shoot();
-
-        Rigidbody.AddForce(transform.up * Force);
         Cam.Shake(0.1f, Shake);
     }
 
