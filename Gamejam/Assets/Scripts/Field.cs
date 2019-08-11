@@ -20,9 +20,6 @@ public class Field : MonoBehaviour
     public static Transform Player;
     public static float TimeScale;
 
-    public delegate void FirstKill();
-    public static FirstKill OnFirstKill;
-
     // Use this for initialization
     private void OnEnable()
     {
@@ -49,10 +46,6 @@ public class Field : MonoBehaviour
     private void GetKill()
     {
         Kills++;
-        if (Kills == 1)
-        {
-            OnFirstKill();
-        }
 
         List<AI> temp = Enemies;
         Enemies.Clear();
