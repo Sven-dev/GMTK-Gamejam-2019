@@ -21,6 +21,9 @@ public class Field : MonoBehaviour
     public static Transform Player;
     public static float TimeScale;
 
+    public delegate void Kill();
+    public static Kill FirstKill;
+
     // Use this for initialization
     private void OnEnable()
     {
@@ -47,6 +50,10 @@ public class Field : MonoBehaviour
     private void GetKill(AI killed)
     {
         Enemies.Remove(killed);
+        if (FirstKill != null)
+        {
+            FirstKill();
+        }
     }
 
     private void Gameover()
