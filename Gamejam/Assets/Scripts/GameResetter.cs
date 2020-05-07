@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameResetter : MonoBehaviour {
-
-    public bool Active = false;
-	
+public class GameResetter : MonoBehaviour
+{
 	// Update is called once per frame
 	void Update ()
     {
-		if (Active)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene("Game");
-            }
+            SceneManager.LoadScene("Menu");
+        }
+        else if (Input.anyKeyDown)
+        {
+            SceneManager.LoadScene("Game");
         }
 	}
-
-
 }

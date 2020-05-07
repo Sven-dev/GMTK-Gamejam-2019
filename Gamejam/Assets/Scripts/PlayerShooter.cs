@@ -14,7 +14,7 @@ public class PlayerShooter : Shooter
     private CameraShake Cam;
 
 	// Use this for initialization
-	protected override void Start ()
+	public override void Start ()
     {
         base.Start();
         Coolingdown = false;

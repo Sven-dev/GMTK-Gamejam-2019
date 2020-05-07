@@ -10,18 +10,16 @@ public class Field : MonoBehaviour
     [Space]
     public float SpawnDelay;
 
-    private int Kills;
     private bool Playing;
+    private int Waves;
     
     public List<AI> Enemies;
+    private float Timer;
 
     private static Transform Points;
 
     public static Transform Player;
     public static float TimeScale;
-
-    public delegate void FirstKill();
-    public static FirstKill OnFirstKill;
 
     // Use this for initialization
     private void OnEnable()
@@ -30,14 +28,14 @@ public class Field : MonoBehaviour
         Player = GameObject.FindWithTag("Player").transform;
         TimeScale = Time.timeScale;
 
-        Kills = 0;
         Playing = true;
         Enemies = new List<AI>();
 
         Health.OnDeath += GetKill;
         Health.OnPlayerDeath += Gameover;
 
-        StartCoroutine(_SpawnTimer());
+        StartCoroutine(_WaveTimer());
+        StartCoroutine(_ExtraTimer());
 	}
 
     public static Vector2 GetPoint()
@@ -46,24 +44,9 @@ public class Field : MonoBehaviour
         return Points.GetChild(rnd).position;
     }
 
-    private void GetKill()
+    private void GetKill(AI killed)
     {
-        Kills++;
-        if (Kills == 1)
-        {
-            OnFirstKill();
-        }
-
-        List<AI> temp = Enemies;
-        Enemies.Clear();
-
-        foreach(AI enemy in temp)
-        {
-            if (enemy != null)
-            {
-                Enemies.Add(enemy);
-            }
-        }
+        Enemies.Remove(killed);
     }
 
     private void Gameover()
@@ -71,102 +54,82 @@ public class Field : MonoBehaviour
         Playing = false;
     }
 
-    IEnumerator _SpawnTimer()
+    /// <summary>
+    /// Spawns a new wave when there are no enemies left
+    /// </summary>
+    IEnumerator _WaveTimer()
     {
-        float progress = 0;
+        yield return new WaitForSeconds(1f);
         while (Playing)
         {
             if (Enemies.Count == 0)
             {
-                SpawnEnemy();
-            }
-
-            if (progress >= SpawnDelay)
-            {
-                SpawnEnemies();
-                progress = 0;
-            }
-            else
-            {
-                progress += Time.deltaTime;                         
+                Timer = 0;
+                Waves++;
+                StartCoroutine(_SpawnEnemies());
+                yield return new WaitForSeconds(2f);
             }
 
             yield return null;
         }
     }
 
-    private void SpawnEnemy()
+    /// <summary>
+    /// Spawns the next wave if the player is taking too long
+    /// </summary>
+    IEnumerator _ExtraTimer()
     {
-        if (Kills < 5)
+        while (Playing)
         {
-            Enemies.Add(Instantiate(RandomEnemy(0, 2), RandomSpawn()));
-        }
-        else if (Kills < 10)
-        {
-            Enemies.Add(Instantiate(RandomEnemy(0, 3), RandomSpawn()));
-        }
-        else if (Kills < 15)
-        {
-            Enemies.Add(Instantiate(RandomEnemy(0, 4), RandomSpawn()));
-        }
-        else
-        {
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-        }
-
-        foreach (AI enemy in Enemies)
-        {
-            if (enemy != null)
+            if (Timer > 60)
             {
-                enemy.transform.parent = null;
+                Timer = 0;
+                Waves++;
+
+                StartCoroutine(_SpawnEnemies());
             }
+
+            Timer += 1 + Waves/10f;
+            yield return new WaitForSeconds(1f);
         }
     }
 
-    private void SpawnEnemies()
+    /// <summary>
+    /// For each wave killed, spawn a wave with 1 more enemy than the last
+    /// </summary>
+    IEnumerator _SpawnEnemies()
     {
-        if (Kills < 5)
+        int enemies = Waves;
+        while (enemies > 0)
         {
-            //spawn 2
-            Enemies.Add(Instantiate(RandomEnemy(0, 2), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 2), RandomSpawn()));
-        }
-        else if (Kills < 10)
-        {
-            //spawn 3
-            Enemies.Add(Instantiate(RandomEnemy(0, 3), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 3), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 3), RandomSpawn()));
-        }
-        else if (Kills < 15)
-        {
-            //spawn 4
-            Enemies.Add(Instantiate(RandomEnemy(0, 4), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 4), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 4), RandomSpawn()));
-        }
-        else
-        {
-            //spawn 5
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-            Enemies.Add(Instantiate(RandomEnemy(0, 5), RandomSpawn()));
-        }
+            yield return new WaitForSeconds(1f);
+            for (int i = enemies; i > 0 && i > enemies - 5; i--)
+            {
+                SpawnEnemy();
 
-        foreach (AI enemy in Enemies)
-        {
-            if (enemy != null)
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            enemies -= 5;
+
+            foreach (AI enemy in Enemies)
             {
                 enemy.transform.parent = null;
-            }
+            }          
         }
+    }
+
+    private AI SpawnEnemy()
+    {
+        AI enemy = Instantiate(RandomEnemy(0, Waves), RandomSpawn());
+        Enemies.Add(enemy);
+
+        return enemy;
     }
 
     private AI RandomEnemy(int min, int max)
     {
-        int rnd = Random.Range(min, max);
+        int rnd = Random.Range(min, Mathf.Clamp(max, 1, 2));
         return EnemyPrefabs[rnd];
     }
 

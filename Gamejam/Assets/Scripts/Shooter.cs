@@ -12,9 +12,13 @@ public class Shooter : MonoBehaviour {
     private Rigidbody2D Rigidbody;
 
     // Use this for initialization
-    protected virtual void Start ()
+    public virtual void Start ()
     {
-		BulletSpawn = transform.GetChild(0);
+        if (transform.childCount != 0)
+        {
+            BulletSpawn = transform.GetChild(0);
+        }
+
         Audio = GetComponent<AudioSource>();
         Rigidbody = transform.parent.GetComponent<Rigidbody2D>();
     }

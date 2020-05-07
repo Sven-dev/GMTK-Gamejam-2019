@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     public AudioClip DeathSFX;
 
     [Space]
-    public List<SpriteRenderer> NumberSprites;
+    public List<Shooter> NumberSprites;
 
     private SpriteRenderer NumberSprite;
     private SpriteRenderer CharacterSprite;
@@ -21,11 +21,11 @@ public class Health : MonoBehaviour
 
     private AI AI;
 
-    public delegate void Death();
+    public delegate void Death(AI enemy);
     public static Death OnDeath;
 
     public delegate void PlayerDeath();
-    public static Death OnPlayerDeath;
+    public static PlayerDeath OnPlayerDeath;
 
     // Use this for initialization
     private void OnEnable()
@@ -58,7 +58,9 @@ public class Health : MonoBehaviour
 
         //Change the object
         Destroy(transform.GetChild(0).gameObject);
-        NumberSprite = Instantiate(NumberSprites[Number], transform);
+        Shooter shooter = Instantiate(NumberSprites[Number], transform);
+        shooter.Start();
+        NumberSprite = shooter.GetComponent<SpriteRenderer>();
 
         if (Number == 0)
         {
@@ -66,7 +68,7 @@ public class Health : MonoBehaviour
             StartCoroutine(_Death());
             if (OnDeath != null)
             {
-                OnDeath();
+                OnDeath(AI);
             }
            
             if (player)

@@ -44,7 +44,7 @@ public class GameOverLabel : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        Resetter.Active = true;
+        Resetter.enabled = true;
 
         yield return new WaitForSeconds(1);
 
