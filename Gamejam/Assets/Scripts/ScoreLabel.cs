@@ -23,7 +23,7 @@ public class ScoreLabel : MonoBehaviour
         Health.OnDeath -= UpdateText;
     }
 
-    private void UpdateText()
+    private void UpdateText(AI enemy)
     {
         Text.text += "1";
         Shake(0.5f, 7.5f);

@@ -27,10 +27,6 @@ public class Controller : MonoBehaviour {
         {
             Shooter.Aim(KeyCode.Mouse0);
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Shooter.Aim(KeyCode.Mouse1);
-        }
     }
 
     private void CheckForMove()

@@ -14,7 +14,18 @@ public class MusicManager : MonoBehaviour
         Audio = GetComponent<AudioSource>();
 
         Health.OnPlayerDeath += StopMusic;
-        Field.OnFirstKill += StartMusic;
+        Field.FirstKill += StartMusic;
+    }
+
+    private void Update()
+    {
+        float pitch = Field.TimeScale;
+        if (pitch > 1)
+        {
+            pitch = 1;
+        }
+
+        Audio.pitch = pitch;
     }
 
     IEnumerator _Wait(float time)
@@ -26,6 +37,7 @@ public class MusicManager : MonoBehaviour
     private void StartMusic()
     {
         StartCoroutine(_Wait(WaitTime));
+        Field.FirstKill -= StartMusic;
     }
 
     private void StopMusic()
@@ -36,6 +48,6 @@ public class MusicManager : MonoBehaviour
     private void OnDestroy()
     {
         Health.OnPlayerDeath -= StopMusic;
-        Field.OnFirstKill -= StartMusic;
+        Field.FirstKill -= StartMusic;
     }
 }

@@ -29,14 +29,13 @@ public class AI : MonoBehaviour
     IEnumerator _ExecuteAI()
     {
         Shooter = transform.GetComponentInChildren<Shooter>();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.25f);
 
         int number = ActiveAI;
         while (ActiveAI == number)
         {
             //Pick a location
             Vector3 destination = Field.GetPoint();
-
             while (ActiveAI == number && Vector3.Distance(Object.position, destination) > 1f)
             {
                 Vector2 direction = destination - Object.position;
@@ -53,8 +52,6 @@ public class AI : MonoBehaviour
 
             //Pick a target
             Transform target = Field.Player;
-
-
             float progress = 0;
             while(ActiveAI == number && progress < 1)
             {
@@ -90,7 +87,7 @@ public class AI : MonoBehaviour
             //Shoot
             if (ActiveAI == number)
             {
-                Shooter.Shoot();
+                GetComponentInChildren<Shooter>().Shoot();
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -98,21 +95,4 @@ public class AI : MonoBehaviour
         //Start the next AI
         StartAI(ActiveAI);
     }
-
-
-    //AI 2: gets close and dashes
-
-    //AI 3: doesn't move and fires triple shot
-
-    //AI 4: 
-
-    //AI 5
-
-    //AI 6
-
-    //AI 7
-
-    //AI 8
-
-    //AI 9
 }

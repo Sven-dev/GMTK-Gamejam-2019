@@ -199,7 +199,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00020021945, y: -0.00035928795}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -210,7 +210,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.03, y: 0.03}
+  m_Size: {x: 0.0375, y: 0.0375}
   m_EdgeRadius: 0
 --- !u!61 &61575652283169932
 BoxCollider2D:
@@ -476,16 +476,16 @@ MonoBehaviour:
   HitSFX: {fileID: 8300000, guid: f45432234791d1a43b934e696867c206, type: 3}
   DeathSFX: {fileID: 8300000, guid: e5ae5b4896702bd4293a892c0c917155, type: 3}
   NumberSprites:
-  - {fileID: 212917287398465060, guid: 47766d5e9a7adaf4aa30be6f43412357, type: 2}
-  - {fileID: 212808149979247658, guid: ab1ece61183e5ff41af3d5ff98220191, type: 2}
-  - {fileID: 212940519873955324, guid: d9124c2c9cc3c1e44a7eeaff01c5e586, type: 2}
-  - {fileID: 212527888706846946, guid: 2cbedde3b0e58bf4d8eb618b88e43710, type: 2}
-  - {fileID: 212439132451954958, guid: 403f8f0a1d1c3b041834a9d03d0630ee, type: 2}
-  - {fileID: 212786481980685436, guid: 4734def2a3f0b2a4baf21137e97e6521, type: 2}
-  - {fileID: 212706497927160764, guid: 12b9bdde4bcfa4e4f9cce68cc89ac945, type: 2}
-  - {fileID: 212709147029796868, guid: 3756679477a2fb440b5dba0a616a2d32, type: 2}
-  - {fileID: 212384019711737516, guid: b51a5760924a6b94b93725818b9f0e6d, type: 2}
-  - {fileID: 212138702907418996, guid: 0fba88f0def69b947a8543d97b90f63f, type: 2}
+  - {fileID: 114090938668404278, guid: 47766d5e9a7adaf4aa30be6f43412357, type: 2}
+  - {fileID: 114606834874988382, guid: ab1ece61183e5ff41af3d5ff98220191, type: 2}
+  - {fileID: 114411138878213338, guid: d9124c2c9cc3c1e44a7eeaff01c5e586, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!212 &212637352553455846
 SpriteRenderer:
   m_ObjectHideFlags: 1
