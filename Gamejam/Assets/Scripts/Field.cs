@@ -88,7 +88,9 @@ public class Field : MonoBehaviour
     {
         while (Playing)
         {
-            if (Timer > 60)
+            print(Timer);
+
+            if (Timer > 30)
             {
                 Timer = 0;
                 Waves++;
@@ -136,7 +138,7 @@ public class Field : MonoBehaviour
 
     private AI RandomEnemy(int min, int max)
     {
-        int rnd = Random.Range(min, Mathf.Clamp(max, 1, 2));
+        int rnd = Random.Range(min, Mathf.Clamp(max, 1, EnemyPrefabs.Count));
         return EnemyPrefabs[rnd];
     }
 
