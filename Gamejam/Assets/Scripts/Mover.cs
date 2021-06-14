@@ -5,10 +5,12 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public float Speed;
+    public Rigidbody2D Rigidbody;
 
     public void Move(Vector2 direction)
     {
-        transform.GetChild(0).Translate(direction * Speed * Time.deltaTime);
+        //Rigidbody.position += direction * Speed * Time.deltaTime;
+        transform.GetChild(0).Translate(direction * Speed * Field.TimeScale * Time.fixedDeltaTime);
     }
 
     public void Move(KeyCode key, Vector2 direction)
@@ -23,24 +25,24 @@ public class Mover : MonoBehaviour
         //startup
         while (Input.GetKey(key) && temp < 10)
         {
-            transform.Translate(direction * (Speed * 0.1f * temp) * Time.deltaTime);
+            transform.Translate(direction * (Speed * 0.1f * temp) * Field.TimeScale * Time.fixedDeltaTime);
             temp++;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         //full speed
         while (Input.GetKey(key))
         {
-            transform.Translate(direction * Speed * Time.deltaTime);
-            yield return null;
+            transform.Translate(direction * Speed * Field.TimeScale * Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
         }
 
         //slowdown
         while (temp > 0)
         {
-            transform.Translate(direction * (Speed * 0.1f * temp) * Time.deltaTime);
+            transform.Translate(direction * (Speed * 0.1f * temp) * Field.TimeScale * Time.fixedDeltaTime);
             temp--;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 }

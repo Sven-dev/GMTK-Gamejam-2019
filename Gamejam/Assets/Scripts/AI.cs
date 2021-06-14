@@ -43,11 +43,11 @@ public class AI : MonoBehaviour
                 //Rotate towards location
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion q = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-                Object.rotation = Quaternion.Lerp(Object.rotation, q, Time.deltaTime * 2.5f);
+                Object.rotation = Quaternion.Lerp(Object.rotation, q, Time.fixedDeltaTime * 2.5f);
 
                 //Move to it
                 Mover.Move(Vector2.down);
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
 
             //Pick a target
@@ -62,8 +62,8 @@ public class AI : MonoBehaviour
                 Quaternion q = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
                 Object.rotation = Quaternion.Lerp(Object.rotation, q, progress);
 
-                progress += Time.deltaTime * 2;
-                yield return null;
+                progress += Time.fixedDeltaTime * 2;
+                yield return new WaitForFixedUpdate();
             }
 
             //wait while looking at target
@@ -80,8 +80,8 @@ public class AI : MonoBehaviour
                 float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
                 Object.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 89f));
 
-                waittime -= Time.deltaTime;
-                yield return null;
+                waittime -= Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
             }
 
             //Shoot

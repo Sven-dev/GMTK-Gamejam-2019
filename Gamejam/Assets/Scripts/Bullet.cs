@@ -16,11 +16,11 @@ public class Bullet : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
     {
         //Raycast
         Vector3 traveldirection = transform.TransformDirection(Vector2.down);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + traveldirection / 25, traveldirection, Speed * Time.deltaTime, Mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + traveldirection / 25, traveldirection, Speed * Field.TimeScale * Time.fixedDeltaTime, Mask);
 
         //Check for collision
         if (hit.collider != null)
@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
         }  
 
         //move bullet forward
-        transform.Translate(Vector2.down * Speed * Time.deltaTime);                
+        transform.Translate(Vector2.down * Speed * Field.TimeScale * Time.fixedDeltaTime);                
     }
 
     //Destroys the bullet if it's out for too long

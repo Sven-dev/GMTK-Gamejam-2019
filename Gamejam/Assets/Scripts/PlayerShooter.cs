@@ -45,10 +45,9 @@ public class PlayerShooter : Shooter
         //Slow time
         while(Input.GetKey(key))
         {
-            if (Time.timeScale > 0.25f)
+            if (Field.TimeScale > 0.25f)
             {
-                Time.timeScale -= 0.05f;
-                Field.TimeScale = Time.timeScale;
+                Field.TimeScale -= 0.05f;
             }
 
             yield return null;
@@ -58,10 +57,9 @@ public class PlayerShooter : Shooter
         StartCoroutine(_Cooldown());
         
         //Speed time back up
-        while(Time.timeScale < 1)
+        while(Field.TimeScale < 1)
         {
-            Time.timeScale += 0.25f;
-            Field.TimeScale = Time.timeScale;
+            Field.TimeScale += 0.25f;
             yield return null;
         }
     }
